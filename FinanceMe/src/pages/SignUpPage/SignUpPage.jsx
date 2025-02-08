@@ -1,59 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../components/button';
 import './SignUpPage.css';
-import { useForm } from 'react-hook-form'
 import Logo from '../../components/Logo.jsx';
-import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
+export default function SignUpPage() {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [quiz, setQuiz] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [resultMessage, setResultMessage] = useState("");
 
-export default function SignUpPage (){
+  useEffect(() => {
+    axios.get("https://ugabackend.onrender.com/quiz/categories")
+      .then(response => setCategories(response.data.categories))
+      .catch(error => console.error("Error fetching categories:", error));
+  }, []);
 
-  const navigate = useNavigate();
+  const fetchQuiz = (category) => {
+    setSelectedCategory(category);
+    axios.get(`https://ugabackend.onrender.com/quiz/${category}`)
+      .then(response => setQuiz(response.data))
+      .catch(error => console.error("Error fetching quiz:", error));
+  };
 
-  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {name: '', email: '', password: ''}});
-
-  const Submit = async (formData, e) => {
-    console.log(formData);
-    e.preventDefault();
-    try {
-      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),  // Send { "username": "...", "password": "..." }
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert("Signup successful! You can now log in.");
-        console.log("Signup Success:", data);
-        navigate("/login"); // Redirect to login page
-      } else {
-        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
-      }
-    } catch (error) {
-      console.error("Error signing up:", error);
-      alert("An error occurred. Please try again.");
-    }
+  const submitAnswer = (question, selectedOption) => {
+    axios.post("https://ugabackend.onrender.com/quiz/answer", {
+      question,
+      answer: selectedOption
+    })
+    .then(response => {
+      setResultMessage(response.data.message);
+      setSelectedAnswers(prev => ({ ...prev, [question]: selectedOption }));
+    })
+    .catch(error => console.error("Error checking answer:", error));
   };
 
   return (
     <main className="signup-page">
       <div className="logo-container">
-      <Logo />
+        <Logo />
       </div>
-      <form onSubmit={handleSubmit(Submit)}>
-        <p className="signup-page__error-message">{errors.name?.message}</p>
-          <input placeholder="Name" {...register("name", {required: "name is required", maxLength: {value: 20, message: "Name must be under 20 characters"}})}/>
-          <p className="signup-page__error-message">{errors.username?.message}</p>
-          <input placeholder="Username" {...register("username", {required: "username is required", maxLength: {value: 20, message: "Username must be under 20 characters"}})}/>
-          <p className="signup-page__error-message">{errors.password?.message}</p>
-          <input placeholder="Password" {...register("password", {required: "passname is required", maxLength: {value: 20, message: "Password must be under 20 characters"}})}/>
-        <Button type="submit" className="primary" margin={"30px 0 0 0"}>
-          Sign Up
-        </Button>
-        <p className="signup-page__footer">Have an account already? <span><Link to="/login">Sign In</Link></span></p>
-      </form>
+
+      <h1>Financial Literacy Quiz</h1>
+
+      {/* Quiz Categories */}
+      <h2>Select a Category</h2>
+      {categories.length > 0 ? (
+        categories.map(category => (
+          <button key={category} onClick={() => fetchQuiz(category)}
+              style={{ margin: "10px", padding: "10px", cursor: "pointer" }}>
+              {category}
+          </button>
+        ))
+      ) : (
+        <p>Loading categories...</p>
+      )}
+
+      {/* Quiz Questions */}
+      {selectedCategory && <h2>{selectedCategory} Quiz</h2>}
+      {quiz.map((q, index) => (
+        <div key={index} style={{ marginBottom: "20px", border: "1px solid gray", padding: "10px", borderRadius: "8px" }}>
+          <h3>{q.financial_literacy_quiz}</h3>
+          {[q.option1, q.option2, q.option3, q.option4].map((option, idx) => (
+            <button key={idx} 
+                onClick={() => submitAnswer(q.financial_literacy_quiz, option)}
+                style={{ margin: "5px", padding: "8px", cursor: "pointer",
+                         backgroundColor: selectedAnswers[q.financial_literacy_quiz] === option ? "lightblue" : "white" }}>
+                {option}
+            </button>
+          ))}
+        </div>
+      ))}
+
+      {/* Result Message */}
+      {resultMessage && <h3 style={{ color: resultMessage === "Correct!" ? "green" : "red" }}>{resultMessage}</h3>}
     </main>
   );
 };
