@@ -42,8 +42,8 @@ function LandingPage() {
   };
 
   const handlePlayGame = () => {
-    navigate('/roomSelect', { state: { questionsData } });
-    // Option 2: You could store the Q&A data in Context or a global store (e.g. Redux)
+    navigate('/roomSelect');
+
   };
 
   return (
