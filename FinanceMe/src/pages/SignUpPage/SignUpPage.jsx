@@ -1,15 +1,15 @@
-// Signup.jsx
-import React, { useState } from 'react';
-import Button from '../../components/button';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/button";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    username: "",  // Using "username" instead of "name"
+    password: "",
   });
 
-  // Update form state as the user types
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -17,19 +17,37 @@ const SignUpPage = () => {
     });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Replace this with your signup logic (e.g., API call)
-    console.log('Signup Data:', formData);
-    alert('Signup successful!');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      password: '',
-    });
+
+    try {
+      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),  // Send { "username": "...", "password": "..." }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Signup successful! You can now log in.");
+        console.log("Signup Success:", data);
+
+        setFormData({
+          username: "",
+          password: "",
+        });
+
+        navigate("/login"); // Redirect to login page
+      } else {
+        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -37,27 +55,14 @@ const SignUpPage = () => {
       <h1>Create an Account</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-field">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
-            placeholder="Your full name"
-            required
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your email address"
+            placeholder="Choose a username"
             required
           />
         </div>
