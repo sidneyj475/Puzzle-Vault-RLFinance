@@ -21,16 +21,6 @@ function RoomSelectPage() {
   const [index, setIndex] = useState(0);
   const [j, setJ] = useState(0);
 
-// Decrement index, but not below 0
-const handlePrev = () => {
-  setIndex((currentIndex) => (currentIndex - 1 + imageArrays.length) % imageArrays.length);
-};
-
-// Increment index, but not above 3
-const handleNext = () => {
-  setIndex((currentIndex) => (currentIndex + 1) % imageArrays.length);
-};
-
 const handleImageClick = (path) => {
   window.location.href = path;
 };
@@ -40,42 +30,22 @@ const handleImageClick = (path) => {
     { image: roomImage2, path: "path-to-room2" },
     { image: roomImage3, path: "path-to-room3" },
   ];
-  
-  const suiteImages = [
-    { image: suiteImage1, path: "path-to-suite1" },
-    { image: suiteImage2, path: "path-to-suite2" },
-    { image: suiteImage3, path: "path-to-suite3" },
-  ];
-  
-  const deluxeImages = [
-    { image: deluxeImage1, path: "path-to-deluxe1" },
-    { image: deluxeImage2, path: "path-to-deluxe2" },
-    { image: deluxeImage3, path: "path-to-deluxe3" },
-  ];
-
-  const imageArrays = [roomImages, suiteImages, deluxeImages];
 
   return (
     <main className="room-select-page">
-      <h1>Asset Management</h1>
-
+      <h1>Select Difficulty</h1>
+      
       <div className="room-select-page__carousel">
-        <Button onClick={handlePrev} className="nav-button nav-button--prev">
-          &larr;
-        </Button>
 
-        {imageArrays[index].map((imgObj, idx) => (
+        {roomImages.map((imgObj, idx) => (
           <ImageContainer
             key={idx}
             src={imgObj.image}
             alt="Image Couldn't Load"
+            difficulty={[1, 1, 1]}
             onClick={() => handleImageClick(imgObj)}
           />
         ))}
-
-        <Button onClick={handleNext} className="nav-button nav-button--next">
-          &rarr;
-        </Button>
       </div>
     </main>
   );

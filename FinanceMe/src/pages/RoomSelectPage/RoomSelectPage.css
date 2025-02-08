@@ -2,11 +2,13 @@
   display: flex;
   flex-flow: column; 
   align-items: center;
+  background-color: #0D151C;
 }
 
-.room-select-page {
+.room-select-page h1 {
+  color: white;
   font-family: Chivo;
-  font-size: 20px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -15,6 +17,7 @@
 
 .room-select-page__carousel {
   display: flex;
+  max-width: 100vw;
 }
 
 .nav-button {

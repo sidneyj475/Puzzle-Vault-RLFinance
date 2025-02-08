@@ -5,7 +5,6 @@ import QuestionModal from '../../modals/QuestionModal';
 function RoomOne() {
   const [hover, setHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -13,7 +12,6 @@ function RoomOne() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
 
   const handleQuestionSubmit = (selectedOption) => {
 
@@ -32,6 +30,7 @@ function RoomOne() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
+
         <path
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -41,7 +40,6 @@ function RoomOne() {
           stroke="transparent"
         />
       </svg>
-
       <QuestionModal
         show={isModalOpen}
         onCancel={handleCloseModal}
@@ -54,3 +52,4 @@ function RoomOne() {
 }
 
 export default RoomOne;
+

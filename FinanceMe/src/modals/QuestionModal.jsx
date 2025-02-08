@@ -72,7 +72,6 @@ QuestionModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   question: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string),
-  // The new onSubmit prop
   onSubmit: PropTypes.func,
   headerClass: PropTypes.string,
   contentClass: PropTypes.string,
