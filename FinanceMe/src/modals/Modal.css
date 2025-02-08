@@ -1,28 +1,37 @@
+/* Modal.css */
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: 500;
-    display: flex;
-    flex-flow: column nowrap;
-    transform-origin: top left;
-  }
-  .modal-enter{
-    opacity: 0;
-    transform: scale(.8) translateX(-50%) translateY(-50%);
-  }
-  .modal-enter-active {
-    opacity: 1;
-    transform: scale(1) translateX(-50%) translateY(-50%);
-    transition: all 200ms;
-  }
-  .modal-exit {
-    opacity: 1;
-    transform: scale(1) translateX(-50%) translateY(-50%);
-  }
-  .modal-exit-active {
-    opacity: 0;
-    transform: scale(.8) translateX(-50%) translateY(-50%);
-    transition: all 200ms;
-  }
+  /* Give it a background color and some padding so the content doesn't touch edges */
+  background-color: #f0f0f0;       /* or any grey you like */
+  padding: 1rem;
+  border-radius: 8px;
+
+  /* Position & sizing */
+  position: fixed;                /* so it sits on top of everything */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Constrain width/height if needed */
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;               /* so it scrolls if contents are tall */
+  z-index: 999;                   /* ensure it's above other elements */
+}
+
+.modal__header {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal__content-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal__footer {
+  text-align: right;
+  border-top: 1px solid #ccc;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+}
