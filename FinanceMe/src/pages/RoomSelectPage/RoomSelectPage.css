@@ -1,41 +1,47 @@
+.room-select-page {
+  display: flex;
+  flex-flow: column; 
+  align-items: center;
+}
 
-/* Common styles for both nav buttons */
+.room-select-page {
+  font-family: Chivo;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 4.8px;
+}
+
+.room-select-page__carousel {
+  display: flex;
+}
+
 .nav-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     
-    /* Make them circular */
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    
-    /* Match the icon style in your screenshot:
-       - Transparent center
-       - White border
-       - White text/icon
-    */
+  
     background-color: transparent;
     border: 2px solid #fff;
     color: #fff;
-    font-size: 1.25rem; /* Make arrow text or icon a bit larger */
+    font-size: 1.25rem;
     cursor: pointer;
     outline: none;
   }
   
-  /* Left (prev) button on the far left side */
   .nav-button--prev {
     left: 0;
-    /* Or add some spacing: left: 15px; */
   }
   
-  /* Right (next) button on the far right side */
   .nav-button--next {
     right: 0;
-    /* Or add some spacing: right: 15px; */
   }
   
-  /* Optional: hover or focus states */
   .nav-button:hover,
   .nav-button:focus {
     background-color: rgba(255,255,255,0.1); 
