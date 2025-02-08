@@ -3,7 +3,7 @@
 .room {
   display: flex;
   flex-flow: row;
-  width: 300px;
+  flex: 1; 
   height: 500px;
   background-color: #0b0c10;
   border-radius: 10px;
@@ -15,11 +15,49 @@
   align-items: center;
   overflow: hidden;
   margin: 5rem;
+  transition: flex 0.5s ease;
+  position: relative;
 }
 
 /* Make the image fill the container, but maintain aspect ratio */
 .room img {
-  max-width: 100%;
-  max-height: 100%;
+  height: 100%; 
   object-fit: cover;
+}
+
+.room:hover {
+  flex: 3;
+}
+
+.room__description {
+  position: absolute;
+  display: flex;
+  height: 200px;
+  width: 100%;
+  bottom: -100%;
+  background: linear-gradient(to top, black, 50%, transparent);
+  z-index: 100;
+  transition: bottom 0.8s ease;
+}
+
+.room__description p {
+  color: white;
+  font-family: chivo;
+  font-size: 20px; 
+  margin-top: 30px; 
+  margin-right: 10px; 
+  font-weight: 600;
+}
+
+.room__description__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.room:hover .room__description {
+  bottom: 0;
 }
