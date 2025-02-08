@@ -1,22 +1,55 @@
-.view-room {
+.room-one {
   background-image: url("../../assets/ViewRoom.jpeg");
   background-size: cover;
 }
 
-.lamp-border {
+.room-one__lamp {
   position: absolute;
-  top: 336px; 
+  top: 335px;
   left: 267px;
-  stroke: transparent;
 }
 
-.lamp-border path {
-  will-change: stroke;
-  will-change: filter;
+.room-one__chair {
+  top: 346px;
+  left: 716px;
 }
 
-.lamp-border.glow path {
-  stroke: yellow;
-  stroke-width: 3px;
-  filter: drop-shadow(0 0 10px yellow);
+.room-one__monitor {
+  top: 364px;
+  left: 607px;
+}
+
+.room-one__deskplant {
+  top: 436px;
+  left: 451px;
+}
+
+.room-one__clock {
+  top: 128px;
+  left: 1040px;
+}
+
+.room-one__bookshelf {
+  top: 287px;
+  left: 1243px;
+}
+
+.room-one__painting {
+  top: 207px;
+  left: 1024px;
+}
+
+.room-one__shortcactus {
+  left: 1293px; 
+  top: 593px
+}
+
+.room-one__tallcactus {
+  top: 337px;
+  left: 1024px;
+}
+
+.room-one__trashcan {
+top: 613px;
+left: 411px;
 }

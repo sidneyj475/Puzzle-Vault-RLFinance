@@ -1,0 +1,16 @@
+
+.item-border {
+  position: absolute;
+  stroke: transparent;
+}
+
+.item-border path {
+  will-change: stroke;
+  will-change: filter;
+}
+
+.item-border.glow path {
+  stroke: yellow;
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 10px yellow);
+}
