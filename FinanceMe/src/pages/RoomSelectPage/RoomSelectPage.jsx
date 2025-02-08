@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ImageContainer from './ImageContainer'; 
 import Button from '../../components/button';
 import Modal from '../../modals/Modal';
-
+import Header from '../Room/Header'
 // Images
 import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
 import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
