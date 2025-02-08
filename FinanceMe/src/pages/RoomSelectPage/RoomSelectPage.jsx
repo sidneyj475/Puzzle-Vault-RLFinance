@@ -46,7 +46,6 @@ const handleImageClick = (path) => {
             onClick={() => handleImageClick(imgObj)}
           />
         ))}
-
       </div>
     </main>
   );

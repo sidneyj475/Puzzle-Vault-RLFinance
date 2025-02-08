@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import './RoomOne.css';
-import QuestionModal from '../../modals/QuestionModal'; // adjust the import path
+import QuestionModal from '../../modals/QuestionModal'; 
 
-function ViewRoom() {
+function RoomOne() {
   const [hover, setHover] = useState(false);
-  // State to show/hide the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Handler to open the modal
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  // Handler to close the modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleQuestionSubmit = (selectedOption) => {
+
+    console.log('Form submitted. The user selected:', selectedOption);
+    setIsModalOpen(false);
+
   };
 
   return (
@@ -27,7 +30,7 @@ function ViewRoom() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Here is our onClick to open the modal */}
+
         <path
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -37,20 +40,16 @@ function ViewRoom() {
           stroke="transparent"
         />
       </svg>
-
-      {}
       <QuestionModal
         show={isModalOpen}
         onCancel={handleCloseModal}
         question="Which is the correct answer?"
         options={['Option A', 'Option B', 'Option C', 'Option D']}
-        onOptionSelect={(selectedOption) => {
-          console.log('User selected:', selectedOption);
-          setIsModalOpen(false);
-        }}
+        onSubmit={handleQuestionSubmit}
       />
     </main>
   );
 }
 
-export default ViewRoom;
+export default RoomOne;
+
