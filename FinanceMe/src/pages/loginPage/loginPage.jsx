@@ -2,75 +2,56 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button';
-import './loginPage'; // <-- Import the CSS file
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Logo from '../../components/Logo.jsx';
+import './loginPage.css'; // <-- Import the CSS file
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const navigate = useNavigate();
 
-  // Update state as user types into the inputs
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {email: '', password: ''}});
 
-  // Handle login form submission
-  const handleSubmit = (e) => {
+  const Submit = async (formData, e) => {
+    console.log(formData);
     e.preventDefault();
-    // Your login logic goes here (e.g., API call)
-    console.log('Login credentials:', formData);
-    alert('Logged in successfully!');
+    try {
+      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),  // Send { "username": "...", "password": "..." }
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Signup successful! You can now log in.");
+        console.log("Signup Success:", data);
+        navigate("/login"); // Redirect to login page
+      } else {
+        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
-    <main className="login-container">
-      {}
-      {}
-      
-      <h1 className="login-heading">Login</h1>
-      
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-field">
-          <label htmlFor="email">Email Address</label>
-          <input 
-            type="email"
-            id="email"
-            name="email"
-            className="login-input"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="password">Password</label>
-          <input 
-            type="password"
-            id="password"
-            name="password"
-            className="login-input"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Using the custom Button component with the "primary" class */}
-        <Button type="submit" className="primary login-button">
+    <main className="login-page">
+      <div className="logo-container">
+      <Logo />
+      </div>
+      <form onSubmit={handleSubmit(Submit)}>
+          <p className="login-page__error-message">{errors.username?.message}</p>
+          <input placeholder="Username" {...register("username", {required: "Username is required", maxLength: {value: 20, message: "Username must be under 20 characters"}})}/>
+          <p className="login-page__error-message">{errors.password?.message}</p>
+          <input placeholder="Password" {...register("password", {required: "Password is required", maxLength: {value: 20, message: "Password must be under 20 characters"}})}/>
+        <Button type="submit" className="primary" margin={"30px 0 0 0"}>
           Sign In
         </Button>
+        <p className="login-page__footer">Don&apos;t have an account? <span><Link to="/sign-up">Sign Up</Link></span></p>
       </form>
-
-      <p className="login-footer-text">
-        Don’t have an account? <Link to="/signup">Sign Up</Link>
-      </p>
     </main>
   );
 };
