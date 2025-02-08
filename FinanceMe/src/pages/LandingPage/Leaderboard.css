@@ -1,49 +1,98 @@
-/* Container for the whole table/card */
+
 .leaderboard-container {
-    background-color: #0b0c10; /* Dark background to match your screenshot */
-    border-radius: 8px;
-    padding: 1rem;
-    max-width: 600px;        /* Adjust as needed */
-    margin: 0 auto;          /* Center horizontally on the page */
-    color: #ffffff;          /* White text */
-  }
+  max-width: 1087px;
+  color: #ffffff;      
+  display: flex;
+  flex-flow: column;
+  align-items: center; 
+  gap: 20px;
+}
+
+.leaderboard-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.leaderboard-carousel p{
+  width: 500px; 
+  text-align: center; 
+  color: #FFF;
+font-size: 30px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 7.5px;
+}
+
+.leaderboard-carousel__next-button {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  outline: none; 
+  border: none;
+  background-color: transparent; 
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.leaderboard-carousel__next-button:hover {
+  background-color: #162431; 
+}
   
-  /* Table styling */
   .leaderboard-table {
-    width: 100%;
-    border-collapse: collapse; /* Remove default spacing between cells */
+    width: 1087px;
+height: 372px;
+flex-shrink: 0;
+    border-collapse: collapse;
+    background-color: #162431;
+    border-radius: 16px;
   }
   
   /* Header cells */
   .leaderboard-table thead th {
     text-align: center;
-    font-weight: normal;       /* Match your screenshot’s lighter heading */
-    padding-bottom: 0.75rem;
+    font-weight: normal;
+    padding: 0.75rem;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 2.4px;
+    height: 75px;
+    width: 40%;
   }
   
-  /* Empty header cell on the left column, if desired */
-  .empty-header {
-    width: 30%; /* Adjust if you want the left column to have more/less space */
+  .leaderboard-table thead th.empty-header {
+    width: 20%;
   }
   
   /* Body cells */
   .leaderboard-table tbody td {
     padding: 0.75rem 1rem;
-    text-align: center; /* Center text for times */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Divider line */
-  }
-  
-  /* Make the left column (Level) left-aligned */
-  .level-cell {
-    text-align: left;
-  }
-  
-  /* Time cells can remain centered */
-  .time-cell {
     text-align: center;
   }
   
-  /* Remove the bottom border from the last row */
+  .level-cell {
+    text-align: left;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    letter-spacing: 7.5px;
+  }
+  
+  .time-cell {
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+    letter-spacing: 2.4px;
+  }
+
   .leaderboard-table tbody tr:last-of-type td {
     border-bottom: none;
   }
