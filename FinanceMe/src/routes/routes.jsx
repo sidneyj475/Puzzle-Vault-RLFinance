@@ -7,11 +7,11 @@ import LandingPage from '../pages/LandingPage/LandingPage';
 import RoomSelectPage from '../pages/RoomSelectPage/RoomSelectPage';
 import Room from '../pages/Room/Room';
 import ProtectedRoute from './ProtectedRoute';
-import ViewRoom from '../pages/Room/ViewRoom.jsx';
+import RoomOne from '../pages/Room/RoomOne.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/login',
+    path: '/',
     element: <LoginPage />,
   },
   {
@@ -21,14 +21,16 @@ const router = createBrowserRouter([
   { path: '/landingPage', element: <LandingPage /> },
   { path: '/roomSelect', element: <RoomSelectPage />},
   { path: '/room/:roomGenre/:roomNumber', element: <Room />},
-  { path: '/path-to-room2', element: <ViewRoom />},
+  { path: '/path-to-room2', element: <RoomOne />},
   {
     path: '/',
     element: <ProtectedRoute />,
        children:  [
         { path: '/landingPage', element: <LandingPage /> },
         { path: '/roomSelect', element: <RoomSelectPage />},
-        { path: '/room/:roomGenre/:roomNumber', element: <Room />}
+        { path: '/room/1', element: <Room />},
+        { path: '/room/2', element: <Room />},
+        { path: '/room/3', element: <Room />},
       ]
   },
 ]);

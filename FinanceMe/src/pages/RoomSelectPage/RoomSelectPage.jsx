@@ -3,6 +3,8 @@ import ImageContainer from './ImageContainer';
 import Button from '../../components/button';
 import Modal from '../../modals/Modal';
 import Header from '../Room/Header'
+
+import { useNavigate } from 'react-router-dom';
 // Images
 import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
 import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
@@ -21,14 +23,19 @@ function RoomSelectPage() {
   const [index, setIndex] = useState(0);
   const [j, setJ] = useState(0);
 
-const handleImageClick = (path) => {
-  window.location.href = path;
-};
+
+
+
+  const navigate = useNavigate();
+
+  const handleImageClick = (path) => {
+    navigate(path);
+  };
 
   const roomImages = [
-    { image: roomImage1, path: "path-to-room1" },
-    { image: roomImage2, path: "path-to-room2" },
-    { image: roomImage3, path: "path-to-room3" },
+    { image: roomImage1, path: "/path-to-room1" },
+    { image: roomImage2, path: "/path-to-room2" },
+    { image: roomImage3, path: "/path-to-room3" },
   ];
 
   return (
@@ -43,10 +50,9 @@ const handleImageClick = (path) => {
             src={imgObj.image}
             alt="Image Couldn't Load"
             difficulty={[1, 1, 1]}
-            onClick={() => handleImageClick(imgObj)}
+            onClick={() => handleImageClick(imgObj.path)}
           />
         ))}
-
       </div>
     </main>
   );

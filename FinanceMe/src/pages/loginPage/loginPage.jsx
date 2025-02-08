@@ -34,7 +34,7 @@ const Login = () => {
         localStorage.setItem("token", data.token);
 
         // Redirect to a dashboard or home page
-        navigate("/dashboard");
+        navigate("/landingpage");
       } else {
         alert(`Login failed: ${data.error}`);
       }

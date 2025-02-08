@@ -7,18 +7,20 @@ const QuestionModal = ({
   onCancel,
   question,
   options,
-  onOptionSelect,
+  onSubmit, 
   headerClass,
   contentClass,
   footerClass,
   ...rest
 }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    if (onOptionSelect) {
-      onOptionSelect(option);
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    // If there's a prop called onSubmit, call it with the selected option
+    if (onSubmit) {
+      onSubmit(selectedOption);
     }
   };
 
@@ -26,41 +28,40 @@ const QuestionModal = ({
     <Modal
       show={show}
       onCancel={onCancel}
-      // You can customize these classes or pass them via props
       className="question-modal"
       headerClass={headerClass}
       contentClass={contentClass}
       footerClass={footerClass}
-      // If you want to pass other props down, do so here
       {...rest}
-      // The `header` prop here will display in your Modal's header
       header={<span>Select an Answer</span>}
-      // The `footer` prop here will display in your Modal's footer
       footer={
         <button onClick={onCancel} className="modal-close-btn">
           Close
         </button>
       }
     >
-      {/* The children passed to Modal */}
       <div className="question-modal__content">
-        {/* Display the question */}
         <h2 className="question-title">{question}</h2>
 
-        {/* Render the four (or more) options */}
-        <div className="question-options">
-          {options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleOptionClick(option)}
-              className={`option-btn ${
-                selectedOption === option ? 'option-btn--selected' : ''
-              }`}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+        <form onSubmit={handleFormSubmit}>
+          <div className="question-options">
+            {options.map((option, index) => (
+              <label key={index} style={{ display: 'block', marginBottom: '8px' }}>
+                <input
+                  type="radio"
+                  name="answer"
+                  value={option}
+                  checked={selectedOption === option}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+        </form>
       </div>
     </Modal>
   );
@@ -71,7 +72,7 @@ QuestionModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   question: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string),
-  onOptionSelect: PropTypes.func,
+  onSubmit: PropTypes.func,
   headerClass: PropTypes.string,
   contentClass: PropTypes.string,
   footerClass: PropTypes.string,
