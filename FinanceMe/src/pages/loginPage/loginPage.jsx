@@ -10,7 +10,7 @@ import './loginPage.css'; // <-- Import the CSS file
 const Login = () => {
   const navigate = useNavigate();
 
-  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {email: '', password: ''}});
+  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {username: '', password: ''}});
 
   const Submit = async (formData, e) => {
     console.log(formData);
