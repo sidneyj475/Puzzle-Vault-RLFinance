@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ViewRoom.css';
+import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; // adjust the import path
 
 function ViewRoom() {
