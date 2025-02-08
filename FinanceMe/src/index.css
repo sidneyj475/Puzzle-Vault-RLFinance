@@ -27,9 +27,3 @@ input {
   position: relative;
   z-index: 0;
 }
-
-a {
-  text-decoration: none;
-  color: white; 
-  font-weight: 800;
-}
