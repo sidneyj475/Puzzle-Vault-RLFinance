@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './button.css';
 
-const Button = ({
-  type = 'button',
-  onClick,
-  disabled = false,
-  children,
-  className = '',
-}) => {
+const Button = (props) => {
   return (
     <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`btn ${className}`}
+      type={props.type}
+      onClick={props.onClick}
+      disabled={props.disabled}
+      className={`btn ${props.className}`}
+      style={{backgroundColor: props.backgroundColor, margin: props.margin}}
     >
-      {children}
+      {props.children}
     </button>
   );
 };
@@ -26,6 +22,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  backgroundColor: PropTypes.string,
 };
 
 export default Button;

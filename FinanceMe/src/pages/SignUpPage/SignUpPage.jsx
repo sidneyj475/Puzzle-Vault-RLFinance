@@ -1,86 +1,60 @@
 // Signup.jsx
 import React, { useState } from 'react';
 import Button from '../../components/button';
+import './SignUpPage.css';
+import { useForm } from 'react-hook-form'
+import Logo from '../../components/Logo.jsx';
+import { useNavigate, Link } from "react-router-dom";
 
-const SignUpPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
 
-  // Update form state as the user types
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+export default function SignUpPage (){
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {name: '', email: '', password: ''}});
+
+  const Submit = async (formData, e) => {
+    console.log(formData);
     e.preventDefault();
-    // Replace this with your signup logic (e.g., API call)
-    console.log('Signup Data:', formData);
-    alert('Signup successful!');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      password: '',
-    });
+    try {
+      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),  // Send { "username": "...", "password": "..." }
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Signup successful! You can now log in.");
+        console.log("Signup Success:", data);
+        navigate("/login"); // Redirect to login page
+      } else {
+        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
-    <div className="signup-container">
-      <h1>Create an Account</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-field">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Your full name"
-            required
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your email address"
-            required
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Choose a password"
-            required
-          />
-        </div>
-
-        <Button type="submit" className="primary">
+    <main className="signup-page">
+      <div className="logo-container">
+      <Logo />
+      </div>
+      <form onSubmit={handleSubmit(Submit)}>
+        <p className="signup-page__error-message">{errors.name?.message}</p>
+          <input placeholder="Name" {...register("name", {required: "name is required", maxLength: {value: 20, message: "Name must be under 20 characters"}})}/>
+          <p className="signup-page__error-message">{errors.username?.message}</p>
+          <input placeholder="Username" {...register("username", {required: "username is required", maxLength: {value: 20, message: "Username must be under 20 characters"}})}/>
+          <p className="signup-page__error-message">{errors.password?.message}</p>
+          <input placeholder="Password" {...register("password", {required: "passname is required", maxLength: {value: 20, message: "Password must be under 20 characters"}})}/>
+        <Button type="submit" className="primary" margin={"30px 0 0 0"}>
           Sign Up
         </Button>
+        <p className="signup-page__footer">Have an account already? <span><Link to="/login">Sign In</Link></span></p>
       </form>
-    </div>
+    </main>
   );
 };
-
-export default SignUpPage;
