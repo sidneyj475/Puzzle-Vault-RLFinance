@@ -1,0 +1,22 @@
+.view-room {
+  background-image: url("../../assets/ViewRoom.jpeg");
+  background-size: cover;
+}
+
+.lamp-border {
+  position: absolute;
+  top: 336px; 
+  left: 267px;
+  stroke: transparent;
+}
+
+.lamp-border path {
+  will-change: stroke;
+  will-change: filter;
+}
+
+.lamp-border.glow path {
+  stroke: yellow;
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 10px yellow);
+}
