@@ -5,13 +5,14 @@ import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
 import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
 import roomImage3 from '../../assets/AdobeStock_845835364.jpeg';
 
-import suiteImage1 from '../../assets/AdobeStock_846423919.jpeg';
+import suiteImage1 from '../../assets/ViewRoom.jpeg';
 import suiteImage2 from '../../assets/AdobeStock_937072431.jpeg';
 import suiteImage3 from '../../assets/AdobeStock_845835364.jpeg';
 
 import deluxeImage1 from '../../assets/AdobeStock_1107548196.jpeg';
 import deluxeImage2 from '../../assets/AdobeStock_879761973.jpeg';
 import deluxeImage3 from '../../assets/AdobeStock_1107548196.jpeg';
+import './RoomSelectPage.css';
 
 import { useState } from 'react';
 
@@ -22,12 +23,12 @@ function RoomSelectPage() {
 
 // Decrement index, but not below 0
 const handlePrev = () => {
-  setIndex((currentIndex) => Math.max(currentIndex - 1, 0));
+  setIndex((currentIndex) => (currentIndex - 1 + imageArrays.length) % imageArrays.length);
 };
 
 // Increment index, but not above 3
 const handleNext = () => {
-  setIndex((currentIndex) => Math.min(currentIndex + 1, 2));
+  setIndex((currentIndex) => (currentIndex + 1) % imageArrays.length);
 };
 
 const handleImageClick = (path) => {
@@ -54,10 +55,10 @@ const handleImageClick = (path) => {
   const imageArrays = [roomImages, suiteImages, deluxeImages];
 
   return (
-    <>
-      <header>Asset Management</header>
+    <main className="room-select-page">
+      <h1>Asset Management</h1>
 
-      <div className="room-select-page">
+      <div className="room-select-page__carousel">
         <Button onClick={handlePrev} className="nav-button nav-button--prev">
           &larr;
         </Button>
@@ -78,7 +79,7 @@ const handleImageClick = (path) => {
           &rarr;
         </Button>
       </div>
-    </>
+    </main>
   );
 }
 
