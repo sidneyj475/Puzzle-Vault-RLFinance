@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes/routes.jsx';
 import './index.css';
+import { AuthContext } from './authcontext.jsx';
+
 
 function App() {
   const [token, setToken] = useState();
@@ -37,7 +39,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('fiverUserData'));
+    const userData = JSON.parse(localStorage.getItem('puzzleVaultData'));
     if (userData && userData.token && new Date(userData.expiration) > new Date()) {
       login(userData.name, userData.userId, userData.token, new Date(userData.expiration));
     }
@@ -49,7 +51,16 @@ function App() {
   }
 
   return (
-    <RouterProvider router={router} />
+    <AuthContext.Provider value={{
+      token,
+      userId,
+      name,
+      login,
+      logout
+    }}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
+
   );
 }
 
