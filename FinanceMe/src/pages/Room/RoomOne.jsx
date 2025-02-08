@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
 
 function RoomOne() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [values, setValues] = useState();
+
+  // Keep track of how many correct answers the user has.
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+
+  // Whether to show the lamp (SVG) or not.
+  const [showLamp, setShowLamp] = useState(true);
+
+  // For this example, let's assume we have a single correct answer: "Option B".
+  const CORRECT_ANSWER = 'Option B';
+
+  useEffect(() => {
+    let secondsElapsed = 0;
+
+    const interval = setInterval(() => {
+      secondsElapsed += 1;
+      console.log(`Timer: ${secondsElapsed} second(s)`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -17,10 +37,19 @@ function RoomOne() {
   };
 
   const handleQuestionSubmit = (selectedOption) => {
-
     console.log('Form submitted. The user selected:', selectedOption);
-    setIsModalOpen(false);
+    
+    // Check if the selected option is correct
+    if (selectedOption === CORRECT_ANSWER) {
+      setCorrectAnswers((prevCount) => prevCount + 1);
+      setShowLamp(false); // Hides the lamp if the answer is correct
+      console.log('Correct answer!');
+    } else {
+      console.log('Wrong answer!');
+    }
 
+    // Close the modal after submission
+    setIsModalOpen(false);
   };
 
   return (
@@ -79,4 +108,3 @@ function RoomOne() {
 }
 
 export default RoomOne;
-
