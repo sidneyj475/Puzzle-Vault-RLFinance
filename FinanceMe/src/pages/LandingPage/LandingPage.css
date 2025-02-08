@@ -1,0 +1,18 @@
+.landing-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  background-color: #0B0C10;
+}
+
+.landing-page__play-game-button {
+
+flex-shrink: 0;
+  color: #FFF;
+font-size: 25px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 7.5px;
+margin-bottom: 50px;
+}
