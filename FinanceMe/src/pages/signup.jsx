@@ -1,7 +1,6 @@
 // Signup.jsx
 import React, { useState } from 'react';
-import Button from './Button';
-import './App.css';
+import Button from '../components/button';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
