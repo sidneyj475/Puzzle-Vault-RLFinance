@@ -1,0 +1,50 @@
+/* Container for the whole table/card */
+.leaderboard-container {
+    background-color: #0b0c10; /* Dark background to match your screenshot */
+    border-radius: 8px;
+    padding: 1rem;
+    max-width: 600px;        /* Adjust as needed */
+    margin: 0 auto;          /* Center horizontally on the page */
+    color: #ffffff;          /* White text */
+  }
+  
+  /* Table styling */
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove default spacing between cells */
+  }
+  
+  /* Header cells */
+  .leaderboard-table thead th {
+    text-align: center;
+    font-weight: normal;       /* Match your screenshot’s lighter heading */
+    padding-bottom: 0.75rem;
+  }
+  
+  /* Empty header cell on the left column, if desired */
+  .empty-header {
+    width: 30%; /* Adjust if you want the left column to have more/less space */
+  }
+  
+  /* Body cells */
+  .leaderboard-table tbody td {
+    padding: 0.75rem 1rem;
+    text-align: center; /* Center text for times */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Divider line */
+  }
+  
+  /* Make the left column (Level) left-aligned */
+  .level-cell {
+    text-align: left;
+  }
+  
+  /* Time cells can remain centered */
+  .time-cell {
+    text-align: center;
+  }
+  
+  /* Remove the bottom border from the last row */
+  .leaderboard-table tbody tr:last-of-type td {
+    border-bottom: none;
+  }
+  
