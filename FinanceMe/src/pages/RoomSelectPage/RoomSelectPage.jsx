@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import ImageContainer from './ImageContainer'; 
 import Button from '../../components/button';
-
-// Import your Modal
 import Modal from '../../modals/Modal';
 
 // Images
@@ -19,35 +17,36 @@ import deluxeImage2 from '../../assets/AdobeStock_879761973.jpeg';
 import deluxeImage3 from '../../assets/AdobeStock_1107548196.jpeg';
 
 function RoomSelectPage() {
-  // For switching among room types
   const [index, setIndex] = useState(0);
-
-  // For modal control
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Example: store the selected image info if you want to show it in the modal
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // Decrement index, but not below 0
   const handlePrev = () => {
     setIndex((currentIndex) => Math.max(currentIndex - 1, 0));
   };
 
-  // Increment index, but not above 2
   const handleNext = () => {
     setIndex((currentIndex) => Math.min(currentIndex + 1, 2));
   };
 
-  // If you want to open the modal and show info about the clicked image
   const handleImageClick = (img) => {
     setSelectedImage(img);
     setIsModalOpen(true);
-    // If you want to redirect: window.location.href = path
-    // But presumably you want a modal for now
   };
 
   // Close modal callback
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // “Enter” action callback — customize as needed
+  const enterModal = () => {
+    if (selectedImage) {
+      console.log('Entering room:', selectedImage.path);
+      window.location.href = selectedImage.path;
+    } else {
+      console.log('No image selected');
+    }
   };
 
   // Arrays of images
@@ -85,7 +84,6 @@ function RoomSelectPage() {
             key={idx}
             src={imgObj.image}
             alt="Image Couldn't Load"
-            // Open modal on click
             onClick={() => handleImageClick(imgObj)}
           />
         ))}
@@ -95,16 +93,19 @@ function RoomSelectPage() {
         </Button>
       </div>
 
-      {/* Use the Modal here */}
+      {/* Modal */}
       <Modal
         show={isModalOpen}
-        onCancel={closeModal}  // needed for the backdrop click as well
+        onCancel={closeModal}
         header="Room Details"
-        footer={(
-          <Button onClick={closeModal}>Close</Button>
-        )}
+        /* Provide both buttons in the footer */
+        footer={
+          <>
+            <Button onClick={enterModal}>Enter</Button>
+            <Button onClick={closeModal}>Close</Button>
+          </>
+        }
       >
-        {/* Example content inside the modal */}
         {selectedImage ? (
           <div>
             <h2>Selected Image Path</h2>
