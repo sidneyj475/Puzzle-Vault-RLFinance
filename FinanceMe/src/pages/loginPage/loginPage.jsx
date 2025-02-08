@@ -1,4 +1,4 @@
-// Login.jsx
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button';
@@ -21,23 +21,31 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),  // Send { "username": "...", "password": "..." }
+        body: JSON.stringify(formData), // Send { "username": "...", "password": "..." }
       });
+
       const data = await response.json();
+
       if (response.ok) {
-        alert("Signup successful! You can now log in.");
-        console.log("Signup Success:", data);
-        navigate("/login"); // Redirect to login page
+        alert("Logged in successfully!");
+        console.log("Login Success:", data);
+
+        // Store JWT token in localStorage
+        localStorage.setItem("token", data.token);
+
+        // Redirect to a dashboard or home page
+        navigate("/dashboard");
       } else {
-        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
+        alert(`Login failed: ${data.error}`);
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      console.error("Error logging in:", error);
       alert("An error occurred. Please try again.");
     }
   };
 
   return (
+
     <main className="login-page">
       <div className="logo-container">
       <Logo />
