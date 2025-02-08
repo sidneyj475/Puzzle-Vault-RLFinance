@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import PropTypes from 'prop-types';
+import './QuestionModal.css';
 
 const QuestionModal = ({
   show,
