@@ -1,0 +1,49 @@
+/* Header.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0B0C10; /* Dark background */
+    padding: 1rem;
+  }
+  
+  .profile-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #3b82f6; /* Blue border color */
+    background-color: #D1D5DB; /* Light gray circle */
+  }
+  
+  .name {
+    margin-left: 1rem;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    position: relative;
+  }
+  
+  .sign-out-button {
+    background-color: #8B5CF6; /* Purple button */
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .name::after {
+    content: " ";
+    position: absolute;
+    bottom:0;
+    height: 1px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+  }
+  

@@ -1,29 +1,22 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/button";
-import "./loginPage.css"; // Make sure the CSS file is properly linked
+
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '../../components/button';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Logo from '../../components/Logo.jsx';
+import './loginPage.css'; // <-- Import the CSS file
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",  // Change from "email" to "username" as per Flask API
-    password: "",
-  });
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Redirect after login
+  const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {email: '', password: ''}});
 
-  // Update state as user types into inputs
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const Submit = async (formData, e) => {
+    console.log(formData);
     e.preventDefault();
-
     try {
-      const response = await fetch("https://ugabackend.onrender.com/login", {
+      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,46 +45,21 @@ const Login = () => {
   };
 
   return (
-    <main className="login-container">
-      <h1 className="login-heading">Login</h1>
 
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-field">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            className="login-input"
-            placeholder="Enter your username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="login-input"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <Button type="submit" className="primary login-button">
+    <main className="login-page">
+      <div className="logo-container">
+      <Logo />
+      </div>
+      <form onSubmit={handleSubmit(Submit)}>
+          <p className="login-page__error-message">{errors.username?.message}</p>
+          <input placeholder="Username" {...register("username", {required: "Username is required", maxLength: {value: 20, message: "Username must be under 20 characters"}})}/>
+          <p className="login-page__error-message">{errors.password?.message}</p>
+          <input placeholder="Password" {...register("password", {required: "Password is required", maxLength: {value: 20, message: "Password must be under 20 characters"}})}/>
+        <Button type="submit" className="primary" margin={"30px 0 0 0"}>
           Sign In
         </Button>
+        <p className="login-page__footer">Don&apos;t have an account? <span><Link to="/sign-up">Sign Up</Link></span></p>
       </form>
-
-      <p className="login-footer-text">
-        Don’t have an account? <Link to="/signup">Sign Up</Link>
-      </p>
     </main>
   );
 };
