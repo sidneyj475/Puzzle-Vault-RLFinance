@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ImageContainer from './ImageContainer'; 
 import Button from '../../components/button';
+import Modal from '../../modals/Modal';
+import Header from '../Room/Header'
+// Images
 import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
 import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
 import roomImage3 from '../../assets/AdobeStock_845835364.jpeg';
@@ -14,10 +17,7 @@ import deluxeImage2 from '../../assets/AdobeStock_879761973.jpeg';
 import deluxeImage3 from '../../assets/AdobeStock_1107548196.jpeg';
 import './RoomSelectPage.css';
 
-import { useState } from 'react';
-
 function RoomSelectPage() {
-
   const [index, setIndex] = useState(0);
   const [j, setJ] = useState(0);
 
@@ -52,6 +52,7 @@ const handleImageClick = (path) => {
     { image: deluxeImage2, path: "path-to-deluxe2" },
     { image: deluxeImage3, path: "path-to-deluxe3" },
   ];
+
   const imageArrays = [roomImages, suiteImages, deluxeImages];
 
   return (
@@ -63,19 +64,16 @@ const handleImageClick = (path) => {
           &larr;
         </Button>
 
-
-        {imageArrays[index].map((img, index) => (
+        {imageArrays[index].map((imgObj, idx) => (
           <ImageContainer
-            key={index}
-            src={img.image}
-            alt={`Image Couldn't Load`}
-            onClick={() => handleImageClick(img.path)}
-
+            key={idx}
+            src={imgObj.image}
+            alt="Image Couldn't Load"
+            onClick={() => handleImageClick(imgObj)}
           />
-      ))}
+        ))}
 
         <Button onClick={handleNext} className="nav-button nav-button--next">
-          
           &rarr;
         </Button>
       </div>
