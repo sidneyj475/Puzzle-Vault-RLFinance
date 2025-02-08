@@ -16,7 +16,7 @@ const Login = () => {
     console.log(formData);
     e.preventDefault();
     try {
-      const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
+      const response = await fetch("https://ugabackend.onrender.com/login", {  // FastAPI endpoint
         method: "POST",
         headers: {
           "Content-Type": "application/json",
