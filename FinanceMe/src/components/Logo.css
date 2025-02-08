@@ -1,0 +1,19 @@
+.logo {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.logo p {
+  font-size: 120px;
+  margin: 0;
+  letter-spacing: 15px;
+}
+
+.animation-container {
+  width: 75px;
+  height: 75px;
+  margin-bottom: 10px;
+}
