@@ -1,0 +1,94 @@
+
+/* General page container */
+.login-container {
+    background-color: #121212; /* Dark background */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* White text by default */
+    font-family: 'Arial', sans-serif; /* Or your preferred font */
+    padding: 0 1rem;
+  }
+  
+  /* Logo or title */
+  .login-title {
+    font-size: 3rem; 
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-title img {
+    width: 32px;  /* Adjust if you have a coin icon or similar */
+    height: 32px;
+    margin: 0 0.5rem;
+  }
+  
+  /* Form wrapper */
+  .login-form {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Input fields */
+  .login-input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: #000;
+    outline: none;
+  }
+  
+  .login-input::placeholder {
+    color: #bbb;
+  }
+  
+  /* Sign in button */
+  .login-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #7E29FC; /* Purple color for the button */
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
+  }
+  
+  .login-button:hover {
+    box-shadow: 0 0 10px #7E29FC;
+    transform: translateY(-2px);
+  }
+  
+  /* Additional text/link below the form */
+  .login-footer-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #bbb; /* Slightly lighter than pure white */
+  }
+  
+  .login-footer-text a {
+    color: #7E29FC; 
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  /* Example: center this “footer” text in the container */
+  .login-footer-text {
+    text-align: center;
+  }

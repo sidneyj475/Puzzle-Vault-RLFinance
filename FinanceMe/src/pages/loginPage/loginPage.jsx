@@ -1,8 +1,8 @@
 // Login.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../components/button';
-import '../index.css'; // <-- Import the CSS file
+import Button from '../../components/button';
+import './loginPage'; // <-- Import the CSS file
 
 const Login = () => {
   const [formData, setFormData] = useState({
