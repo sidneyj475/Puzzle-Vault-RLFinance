@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: space-between; /* Put buttons at opposite ends */
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #1a1a1a; /* Example dark background */
+  }
+  
+  /* Optional: style your two header buttons differently */
+  .header-quit {
+    /* Adjust as needed */
+  }
+  
+  .header-hint {
+    /* Adjust as needed */
+  }
+  
