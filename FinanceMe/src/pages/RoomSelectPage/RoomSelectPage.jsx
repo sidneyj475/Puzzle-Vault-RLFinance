@@ -15,6 +15,19 @@ import './RoomSelectPage.css';
 
 function RoomSelectPage() {
 
+  const navigate = useNavigate();
+
+  const handleImageClick = (path) => {
+    navigate(path);
+  };
+
+  const roomImages = [
+    { image: roomImage1, path: "/path-to-room1" },
+    { image: roomImage2, path: "/path-to-room2" },
+    { image: roomImage3, path: "/path-to-room3" },
+  ];
+
+
   return (
     <main className="room-select-page">
       <h1>Select Difficulty</h1>
