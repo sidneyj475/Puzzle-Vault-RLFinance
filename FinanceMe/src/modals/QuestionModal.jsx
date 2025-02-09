@@ -12,13 +12,13 @@ const QuestionModal = ({
   headerClass,
   contentClass,
   footerClass,
+  errorMessage,  // <-- new
   ...rest
 }) => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
     // If there's a prop called onSubmit, call it with the selected option
     if (onSubmit) {
       onSubmit(selectedOption);
@@ -28,21 +28,25 @@ const QuestionModal = ({
   return (
     <Modal
       show={show}
-      onCancel={onCancel}
+      // Remove onCancel so background clicks won't close it
+      // or you can pass onCancel={null} if your Modal supports that
       className="question-modal"
       headerClass={headerClass}
       contentClass={contentClass}
       footerClass={footerClass}
       {...rest}
+      
+      // Title at the top
       header={<span>Select an Answer</span>}
-      footer={
-        <button onClick={onCancel} className="modal-close-btn">
-          Close
-        </button>
-      }
+
+      // NO footer (remove the "Close" button) so they can't dismiss it
+      footer={null}
     >
       <div className="question-modal__content">
         <h2 className="question-title">{question}</h2>
+
+        {/* Display an error if user is incorrect */}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <form onSubmit={handleFormSubmit}>
           <div className="question-options">
@@ -59,6 +63,8 @@ const QuestionModal = ({
               </label>
             ))}
           </div>
+
+          {/* Only way out is to submit the correct answer */}
           <button type="submit" className="submit-btn">
             Submit
           </button>
@@ -70,10 +76,11 @@ const QuestionModal = ({
 
 QuestionModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  // onCancel is optional now if you want to remove it
   question: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string),
   onSubmit: PropTypes.func,
+  errorMessage: PropTypes.string,  // added
   headerClass: PropTypes.string,
   contentClass: PropTypes.string,
   footerClass: PropTypes.string,
@@ -82,6 +89,7 @@ QuestionModal.propTypes = {
 QuestionModal.defaultProps = {
   question: '',
   options: [],
+  errorMessage: '',
 };
 
 export default QuestionModal;
