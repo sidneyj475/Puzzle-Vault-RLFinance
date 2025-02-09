@@ -1,7 +1,7 @@
 import React from "react";
 import "./LandingHeader.css"; 
 import Avatar from '../../components/Avatar.jsx';
-import coin from '../../assets/coin1.svg';
+import coin from '../../assets/coins/coin1.svg';
 import Button from '../../components/button.jsx';
 
 function Header() {

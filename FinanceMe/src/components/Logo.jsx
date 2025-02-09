@@ -1,11 +1,11 @@
 import React from 'react'
 import PixelAnimation from './PixelAnimation.jsx'
-import coin1 from '../assets/coin1.svg';
-import coin2 from '../assets/coin2.svg';
-import coin3 from '../assets/coin3.svg';
-import coin4 from '../assets/coin4.svg';
-import coin5 from '../assets/coin5.svg';
-import coin6 from '../assets/coin6.svg';
+import coin1 from '../assets/coins/coin1.svg';
+import coin2 from '../assets/coins/coin2.svg';
+import coin3 from '../assets/coins/coin3.svg';
+import coin4 from '../assets/coins/coin4.svg';
+import coin5 from '../assets/coins/coin5.svg';
+import coin6 from '../assets/coins/coin6.svg';
 import './logo.css'
 
 function Logo() {

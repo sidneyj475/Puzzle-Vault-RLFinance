@@ -1,0 +1,30 @@
+.room-three {
+  background-image: url("../../assets/RoomThree.jpeg");
+  background-size: cover;
+  overflow: hidden;
+}
+
+.room-three__coffee-machine {
+  top: 373px;
+  left: 150px;
+}
+
+.room-three__coffee-pot {
+  top: 434px;
+  left: 570px;
+}
+
+.room-three__coffee-menu {
+  top: 72px;
+  left: 368px;
+}
+
+.room-three__plant {
+  top: 419px;
+  left: 1332px;
+}
+
+.room-three__stool {
+  top: 631px;
+  left: 637px;
+}
