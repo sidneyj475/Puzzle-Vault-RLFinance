@@ -4,16 +4,19 @@ import './SignUpPage.css';
 import { useForm } from 'react-hook-form'
 import Logo from '../../components/Logo.jsx';
 import { useNavigate, Link } from "react-router-dom";
+import Loading from '../../components/Loading.jsx';
 
 
 export default function SignUpPage (){
 
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {name: '', email: '', password: ''}});
 
   const Submit = async (formData, e) => {
-    console.log(formData);
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await fetch("https://ugabackend.onrender.com/register", {  // FastAPI endpoint
@@ -26,19 +29,22 @@ export default function SignUpPage (){
       const data = await response.json();
       if (response.ok) {
         alert("Signup successful! You can now log in.");
-        console.log("Signup Success:", data);
+        setIsLoading(false);
         navigate("/login"); // Redirect to login page
       } else {
-        alert(`Signup failed: ${data.detail}`);  // Show error message from FastAPI
+        alert(`Signup failed: ${data.detail}`);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error signing up:", error);
       alert("An error occurred. Please try again.");
+      setIsLoading(false);
     }
   };
 
   return (
     <main className="signup-page">
+      {isLoading && <Loading/>}
       <div className="logo-container">
       <Logo />
       </div>

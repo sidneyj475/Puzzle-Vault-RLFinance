@@ -1,6 +1,6 @@
 // Routes.jsx
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import LandingPage from '../pages/LandingPage/LandingPage';
@@ -19,20 +19,16 @@ const router = createBrowserRouter([
     path: '/sign-up',
     element: <SignUpPage />,
   },
-  { path: '/landingPage', element: <LandingPage /> },
-  { path: '/roomSelect', element: <RoomSelectPage />},
-  { path: '/room/:roomGenre/:roomNumber', element: <Room />},
-  { path: '/path-to-room3', element: <RoomOne />},
-  { path: '/path-to-room1', element: <RoomThree />},
   {
     path: '/',
     element: <ProtectedRoute />,
        children:  [
         { path: '/landingPage', element: <LandingPage /> },
         { path: '/roomSelect', element: <RoomSelectPage />},
-        { path: '/room/1', element: <Room />},
-        { path: '/room/2', element: <Room />},
-        { path: '/room/3', element: <Room />},
+        { path: '/room/:roomGenre/:roomNumber', element: <Room />},
+        { path: '/path-to-room3', element: <RoomOne />},
+        { path: '/path-to-room1', element: <RoomThree />},
+        { path: '*', element: <Navigate to="/login" /> },
       ]
   },
 ]);

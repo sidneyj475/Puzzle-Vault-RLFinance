@@ -1,64 +1,44 @@
-.header {
-  width: 100%; 
-  margin-bottom: 50px;
-}
-
-.avatar-container {
-  width: 125px;
-  height: 125px;
-}
-
-.profile-container p {
-  margin-left: 1rem;
-  color: #FFFFFF;
-  font-size: 27px;
-  position: relative;
-  font-weight: 300; 
-  letter-spacing: 7px; 
-}
-
-.profile-container p::after {
-  content: " ";
-  position: absolute;
-  bottom:-5px;
-  height: 1px;
-  left: 0px;
-  width: 100%;
-  background-color: white;
-}
-
-.landing-page__sign-out-button {
-  padding: 13px 25px; 
-  border-radius: 16px;
-  font-size: 16px;
-}
-
-/* Header.css */
-.header {
+.landing-header {
+    width: 100%;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #0B0C10; /* Dark background */
-    padding: 1rem;
+    background-color: transparent; /* Dark background */
+    padding: 0px 4rem 0px 2rem;
   }
   
   .profile-container {
     display: flex;
     align-items: center;
   }
-  
-  .avatar {
-    width: 50px;
-    height: 50px;
+
+  .profile-container p {
+    margin-left: 1rem;
+    color: #FFFFFF;
+    font-size: 27px;
+    position: relative;
+    font-weight: 300; 
+    letter-spacing: 7px; 
   }
 
-  
-  .sign-out-button {
-    background-color: #8B5CF6; /* Purple button */
-    color: #FFFFFF;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
+  .profile-container p::after {
+    content: " ";
+    position: absolute;
+    bottom:-5px;
+    height: 1px;
+    left: 0px;
+    width: 100%;
+    background-color: white;
+  }
+
+  .avatar-container {
+    width: 125px;
+    height: 125px;
+  }
+
+  .landing-header__sign-out-button {
+    padding: 13px 25px; 
+    border-radius: 16px;
+    font-size: 16px;
   }

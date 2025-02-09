@@ -4,18 +4,22 @@ import { RouterProvider } from 'react-router-dom';
 import router from './routes/routes.jsx';
 import './index.css';
 import { AuthContext } from './authcontext.jsx';
+import Loading from './components/Loading.jsx';
 
 
 function App() {
   const [token, setToken] = useState();
   const [userId, setUserId] = useState();
-  const [name, setName] = useState();
+  const [username, setUsername] = useState();
   const [loading, setLoading] = useState(true);
 
   const login = useCallback((name, userId, token, expirationDate) => {
+    console.log("loggin in");
+    console.log(token);
+    console.log(userId);
     setToken(token);
     setUserId(userId);
-    setName(name);
+    setUsername(name);
 
     const tokenExpiration =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
@@ -34,7 +38,7 @@ function App() {
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
-    setName(null);
+    setUsername(null);
     localStorage.removeItem('puzzleVaultData');
   }, []);
 
@@ -47,14 +51,14 @@ function App() {
   }, [login]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
-    <AuthContext.Provider value={{
+    <AuthContext.Provider value={{ isLoggedIn: !!token,
       token,
       userId,
-      name,
+      username,
       login,
       logout
     }}>

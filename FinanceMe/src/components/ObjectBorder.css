@@ -1,7 +1,7 @@
 
 .item-border {
   position: absolute;
-  stroke: black;
+  stroke: transparent;
 }
 
 .item-border path {

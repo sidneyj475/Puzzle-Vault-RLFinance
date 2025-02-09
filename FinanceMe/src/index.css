@@ -5,15 +5,23 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+
+  --primary-color: #0D151C;
+  --secondary-color: #162431;
+  --tertiarey-color: #7A2DCB;
+
+  color: white;
 }
 * {
   box-sizing: border-box;
+  font-family: chivo;
 }
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   position: relative;
+  background-color: var(--primary-color);
 }
 
 main {

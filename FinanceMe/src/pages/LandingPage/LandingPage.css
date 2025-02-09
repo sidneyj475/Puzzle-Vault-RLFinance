@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  background-color: #0B0C10;
+  background-color: var(--primary-color);
 }
 
 .landing-page__play-game-button {
