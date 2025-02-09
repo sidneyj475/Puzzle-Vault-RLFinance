@@ -1,5 +1,8 @@
 A project gamifying financial analysis for employees of a public-facing company
 
+## Team Members
+Carson Bates, Sidney Johnson, Zachariah Risheq, Han Lee
+
 ## Our Inspiration for Puzzle Vault
 
 The inspiration for Puzzle Vault came from our love of escape rooms and trivia games. We wanted to create an engaging, interactive experience that combines the thrill of solving puzzles against the clock with testing your knowledge. Our goal was to gamify learning and problem-solving in a fun, competitive format.
