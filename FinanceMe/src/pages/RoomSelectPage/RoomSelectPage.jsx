@@ -6,9 +6,9 @@ import Header from '../Room/Header'
 
 import { useNavigate } from 'react-router-dom';
 // Images
-import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
-import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
-import roomImage3 from '../../assets/AdobeStock_845835364.jpeg';
+import roomImage1 from '../../assets/AdobeStock_701984883.jpeg';
+import roomImage2 from '../../assets/AdobeStock_701512458.jpeg';
+import roomImage3 from '../../assets/AdobeStock_846423919.jpeg';
 
 import suiteImage1 from '../../assets/ViewRoom.jpeg';
 import suiteImage2 from '../../assets/AdobeStock_937072431.jpeg';
@@ -33,9 +33,21 @@ function RoomSelectPage() {
   };
 
   const roomImages = [
-    { image: roomImage1, path: "/path-to-room1" },
-    { image: roomImage2, path: "/path-to-room2" },
-    { image: roomImage3, path: "/path-to-room3" },
+    { 
+      image: roomImage1, 
+      path: "/path-to-room1",
+      difficulty: [1] // One star
+    },
+    { 
+      image: roomImage2, 
+      path: "/path-to-room2",
+      difficulty: [1, 1] // Two stars
+    },
+    { 
+      image: roomImage3, 
+      path: "/path-to-room3",
+      difficulty: [1, 1, 1] // Three stars
+    },
   ];
 
   return (
@@ -43,13 +55,12 @@ function RoomSelectPage() {
       <h1>Select Difficulty</h1>
       
       <div className="room-select-page__carousel">
-
         {roomImages.map((imgObj, idx) => (
           <ImageContainer
             key={idx}
             src={imgObj.image}
             alt="Image Couldn't Load"
-            difficulty={[1, 1, 1]}
+            difficulty={imgObj.difficulty}
             onClick={() => handleImageClick(imgObj.path)}
           />
         ))}
