@@ -1,0 +1,25 @@
+.quit-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.quit-game p {
+  padding-left: 10px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  margin: 0; 
+}
+
+.quit-game svg {
+  fill: "white";
+  transition: transform .2s ease;
+}
+
+.quit-game:hover svg {
+  transform: scale(1.3);
+}

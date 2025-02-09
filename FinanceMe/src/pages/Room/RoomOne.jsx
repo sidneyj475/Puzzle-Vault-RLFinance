@@ -3,6 +3,7 @@ import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
 import Modal from '../../modals/Modal.jsx'; // Import your generic Modal
+import QuitGame from '../../components/QuitGame.jsx';
 
 function RoomOne() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -145,6 +146,8 @@ function RoomOne() {
 
   return (
     <main className="room-one">
+
+      <QuitGame />
 
       {/* Lamp */}
       <ObjectBorder
