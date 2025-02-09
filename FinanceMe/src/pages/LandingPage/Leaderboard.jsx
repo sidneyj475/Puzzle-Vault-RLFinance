@@ -5,6 +5,29 @@ import nextArrow from '../../assets/nextArrow.svg';
 function Leaderboard() {
   const [genreIndex, setGenreIndex] = useState(0);
 
+  // Initialize topTimes with default values that match your previous styling.
+  // These will be replaced once the API data is fetched.
+  const [topTimes, setTopTimes] = useState({
+    shortest_time1: { time: '8:52', username: 'Jaden' },
+    shortest_time2: { time: '8:52', username: 'Jaden' },
+    shortest_time3: { time: '8:52', username: 'Jaden' },
+  });
+
+  // Fetch leaderboard data on component mount
+  useEffect(() => {
+    async function fetchLeaderboard() {
+      try {
+        const response = await fetch('https://ugabackend.onrender.com/leaderboard_best_of_all');
+        const data = await response.json();
+        setTopTimes(data);
+      } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+      }
+    }
+    fetchLeaderboard();
+  }, []);
+
+  // Build your data array, formatting the topTime using the fetched username and time.
   // Initialize topTimes with the original string values
   const [topTimes, setTopTimes] = useState({
     shortest_time1: 'Jaden — 8:52',
@@ -28,6 +51,28 @@ function Leaderboard() {
 
   // Use the fetched topTimes for each level while keeping personalBest unchanged
   const data = [[
+    { 
+      level: 1, 
+      personalBest: '4:52', 
+      topTime: topTimes.shortest_time1?.username 
+        ? `${topTimes.shortest_time1.username} — ${topTimes.shortest_time1.time}` 
+        : 'Jaden — 8:52'
+    },
+    { 
+      level: 2, 
+      personalBest: '8:52', 
+      topTime: topTimes.shortest_time2?.username 
+        ? `${topTimes.shortest_time2.username} — ${topTimes.shortest_time2.time}` 
+        : 'Jaden — 8:52'
+    },
+    { 
+      level: 3, 
+      personalBest: '-:--', 
+      topTime: topTimes.shortest_time3?.username 
+        ? `${topTimes.shortest_time3.username} — ${topTimes.shortest_time3.time}` 
+        : 'Jaden — 8:52'
+    },
+  ]];
     { level: 1, personalBest: '4:52', topTime: topTimes.shortest_time1 },
     { level: 2, personalBest: '8:52', topTime: topTimes.shortest_time2 },
     { level: 3, personalBest: '-:--', topTime: topTimes.shortest_time3 },
