@@ -28,28 +28,6 @@ function Leaderboard() {
   }, []);
 
   // Build your data array, formatting the topTime using the fetched username and time.
-  // Initialize topTimes with the original string values
-  const [topTimes, setTopTimes] = useState({
-    shortest_time1: 'Jaden — 8:52',
-    shortest_time2: 'Jaden — 8:52',
-    shortest_time3: 'Jaden — 8:52'
-  });
-
-  // Fetch leaderboard data on component mount
-  useEffect(() => {
-    async function fetchLeaderboard() {
-      try {
-        const response = await fetch('https://ugabackend.onrender.com/leaderboard');
-        const data = await response.json();
-        setTopTimes(data);
-      } catch (error) {
-        console.error('Error fetching leaderboard:', error);
-      }
-    }
-    fetchLeaderboard();
-  }, []);
-
-  // Use the fetched topTimes for each level while keeping personalBest unchanged
   const data = [[
     { 
       level: 1, 
@@ -72,10 +50,6 @@ function Leaderboard() {
         ? `${topTimes.shortest_time3.username} — ${topTimes.shortest_time3.time}` 
         : 'Jaden — 8:52'
     },
-  ]];
-    { level: 1, personalBest: '4:52', topTime: topTimes.shortest_time1 },
-    { level: 2, personalBest: '8:52', topTime: topTimes.shortest_time2 },
-    { level: 3, personalBest: '-:--', topTime: topTimes.shortest_time3 },
   ]];
 
   const handlePrevGenre = () => {
@@ -114,6 +88,6 @@ function Leaderboard() {
       </table>
     </div>
   );
-} //
+}
 
 export default Leaderboard;
