@@ -1,16 +1,14 @@
-// LandingPage.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import Header from "./LandingHeader";
 import Button from "../../components/button";
 import Leaderboard from "./Leaderboard";
-import { useNavigate } from 'react-router-dom';
-import './LandingPage.css';
+import "./LandingPage.css";
 
 function LandingPage() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [questionsData, setQuestionsData] = useState(null); 
-  const navigate = useNavigate();
+  const [extractedText, setExtractedText] = useState(""); // Store extracted text
+  const [isProcessing, setIsProcessing] = useState(false); // Handle loading state
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -18,32 +16,45 @@ function LandingPage() {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert('Please select a file first.');
+      alert("Please select a file first.");
       return;
     }
     try {
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append("file", selectedFile);
 
-      // POST the file to your backend
-      const response = await axios.post(
-        'http://localhost:8000/process_pdf', 
-        formData, 
-        { 
-          headers: { 'Content-Type': 'multipart/form-data' }
-        }
-      );
+      // Send file to Flask backend
+      const response = await axios.post("http://localhost:5000/upload_pdf", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      alert('File uploaded and parsed successfully!');
+      // Store extracted text
+      setExtractedText(response.data.extracted_text);
+      alert("File uploaded and parsed successfully!");
     } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Something went wrong uploading/parsing the file.');
+      console.error("Error uploading file:", error);
+      alert("Something went wrong uploading/parsing the file.");
     }
   };
 
-  const handlePlayGame = () => {
-    navigate('/roomSelect', { state: { questionsData } });
-    // Option 2: You could store the Q&A data in Context or a global store (e.g. Redux)
+  const handleQuizzify = async () => {
+    setIsProcessing(true);
+    try {
+      const response = await axios.post("http://localhost:5000/process_pdf");
+
+      if (response.data.error) {
+        alert("Failed to generate and store quiz: " + response.data.error);
+        setIsProcessing(false);
+        return;
+      }
+
+      alert(`Quiz successfully processed and stored! ${response.data.quiz_count} questions added.`);
+    } catch (error) {
+      console.error("Error processing quiz:", error);
+      alert("Something went wrong while processing the quiz.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -54,12 +65,18 @@ function LandingPage() {
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
       <Button onClick={handleUpload}>Upload & Parse PDF</Button>
 
-      <Button 
-        className="landing-page__play-game-button"
-        onClick={handlePlayGame}
-      >
-        Play Game
+      {/* Quizzify button to process and store quiz */}
+      <Button onClick={handleQuizzify} disabled={isProcessing}>
+        {isProcessing ? "Processing..." : "Quizzify"}
       </Button>
+
+      {/* Display extracted text */}
+      {extractedText && (
+        <div className="extracted-text">
+          <h3>Extracted Text from PDF:</h3>
+          <pre>{extractedText}</pre>
+        </div>
+      )}
 
       <Leaderboard />
     </main>
