@@ -40,7 +40,7 @@ function LandingPage() {
   const handleQuizzify = async () => {
     setIsProcessing(true);
     try {
-      const response = await axios.post("https://ugabackend.onrender.com/process_pdf");
+      const response = await axios.post("https://5c99-198-137-18-219.ngrok-free.app/process_pdf");
 
       if (response.data.error) {
         alert("Failed to generate and store quiz: " + response.data.error);
