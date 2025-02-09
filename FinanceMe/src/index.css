@@ -5,9 +5,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+
+  --primary-color: #0D151C;
+  --secondary-color: #162431;
+  --tertiarey-color: #7A2DCB;
+
+  color: black;
 }
 * {
   box-sizing: border-box;
+  font-family: chivo;
 }
 body {
   margin: 0;

@@ -1,12 +1,11 @@
 
 .login-page {
-  background-color: #0D151C;
+  background-color: var(--primary-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   padding: 0 1rem;
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/button';
-import './header.css';
+import './RoomHeader.css';
 
 const Header = ({ onQuit, onHint }) => {
   return (

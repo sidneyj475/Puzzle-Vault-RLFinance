@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './ImageContainer.css';
 import Star from '../../assets/CuteStarSprite.png';
 
-function ImageContainer({ src, alt, onClick, difficulty}) {
+function ImageContainer({ src, alt, onClick, difficulty, onLoad}) {
   return (
       <div className="room">
         <p>hello</p>
