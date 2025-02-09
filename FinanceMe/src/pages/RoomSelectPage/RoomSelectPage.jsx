@@ -6,7 +6,7 @@ import Header from '../Room/Header'
 
 import { useNavigate } from 'react-router-dom';
 // Images
-import roomImage1 from '../../assets/AdobeStock_701984883.jpeg';
+import roomImage1 from '../../assets/RoomThree.jpeg';
 import roomImage2 from '../../assets/AdobeStock_701512458.jpeg';
 import roomImage3 from '../../assets/AdobeStock_846423919.jpeg';
 
