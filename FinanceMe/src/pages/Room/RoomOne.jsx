@@ -7,7 +7,7 @@ function RoomOne() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedObject, setSelectedObject] = useState(null);
 
-  // Track whether each item has been answered (true = answered)
+  // Track whether each item has been answered
   const [answeredItems, setAnsweredItems] = useState({
     lamp: false,
     bookshelf: false,
@@ -21,13 +21,14 @@ function RoomOne() {
     trashcan: false,
   });
 
-  // For this example, let's assume there's only one correct choice
-  const CORRECT_ANSWER = 'Option B';
+  // Store all questions (fetched from server) in this state
+  const [questionPool, setQuestionPool] = useState([]);
+  // Current question displayed in the modal
+  const [currentQuestion, setCurrentQuestion] = useState(null);
 
-  // Track an error message if the user is wrong
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Simple timer (optional)
+  // Optional: A simple timer example
   useEffect(() => {
     let secondsElapsed = 0;
     const interval = setInterval(() => {
@@ -38,41 +39,85 @@ function RoomOne() {
     return () => clearInterval(interval);
   }, []);
 
-  // Opens the modal for a specific object (if not answered already)
+  // Fetch quiz data on mount
+  useEffect(() => {
+    fetch('http://localhost:3001/api/quizdata') // or your actual endpoint
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          // Flatten all categories into a single array
+          const allQuestions = [];
+          for (let cat in data.quizzes) {
+            allQuestions.push(...data.quizzes[cat]);
+          }
+          setQuestionPool(allQuestions);
+          console.log('Fetched question pool:', allQuestions);
+        } else {
+          console.error('Quiz data fetch returned an error:', data);
+        }
+      })
+      .catch((err) => console.error('Error fetching quiz data:', err));
+  }, []);
+
+  // When user clicks an object
   const handleOpenModal = (objectKey) => {
+    // If that object was not answered already
     if (!answeredItems[objectKey]) {
+      // If we've used up all questions
+      if (questionPool.length === 0) {
+        alert('No more questions available!');
+        return;
+      }
+
+      // Pick a random question from questionPool
+      const randomIndex = Math.floor(Math.random() * questionPool.length);
+      const randomQuestion = questionPool[randomIndex];
+
+      setCurrentQuestion(randomQuestion);
       setSelectedObject(objectKey);
-      setErrorMessage('');  // Clear any old error messages
+      setErrorMessage('');
       setIsModalOpen(true);
     }
   };
 
-  // Close modal helper (though we block manual close until correct)
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedObject(null);
-    setErrorMessage('');
-  };
-
-  // Handle the user's answer
+  // Handle user's answer
   const handleQuestionSubmit = (selectedOption) => {
     console.log('User selected:', selectedOption);
-    if (selectedOption === CORRECT_ANSWER) {
+
+    if (!currentQuestion) return; // Safety check
+
+    if (selectedOption === currentQuestion.correctAnswer) {
       console.log('Correct answer!');
+
+      // Remove this question from questionPool so it won't be repeated
+      setQuestionPool((prevPool) =>
+        prevPool.filter((q) => q.question !== currentQuestion.question)
+      );
+
       // Mark only that object as answered
       setAnsweredItems((prev) => ({
         ...prev,
         [selectedObject]: true,
       }));
+
       // Close modal
       setIsModalOpen(false);
       setSelectedObject(null);
       setErrorMessage('');
+      setCurrentQuestion(null);
     } else {
       console.log('Wrong answer!');
       // Keep the modal open and show error
       setErrorMessage('That is incorrect. Please try again!');
     }
+  };
+
+  // Close modal helper (though currently we block manual close until correct)
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedObject(null);
+    setErrorMessage('');
+    setCurrentQuestion(null);
   };
 
   return (
@@ -191,10 +236,10 @@ function RoomOne() {
       {/* The Question Modal */}
       <QuestionModal
         show={isModalOpen}
-        // We pass null so the user can't manually close it
         onCancel={null}
-        question="Which is the correct answer?"
-        options={['Option A', 'Option B', 'Option C', 'Option D']}
+        // Use the question & options from currentQuestion
+        question={currentQuestion ? currentQuestion.question : ''}
+        options={currentQuestion ? currentQuestion.options : []}
         errorMessage={errorMessage}
         onSubmit={handleQuestionSubmit}
       />
