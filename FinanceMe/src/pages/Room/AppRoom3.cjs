@@ -5,13 +5,13 @@ const axios = require('axios');
 const fetch = (...args) => import('node-fetch').then(({ default: f }) => f(...args));
 
 const app = express();
-const PORT = 3001; 
+const PORT = 3002; 
 
 app.use(cors()); // allow cross-origin requests (React on :3000 -> Node on :3001)
 
 // 1) GET categories from your backend (using Axios)
 async function fetchCategories() {
-  const url = 'https://ugabackend.onrender.com/quiz/categories';
+  const url = 'https://ugabackend.onrender.com/quiz_truist/categories';
   const response = await axios.get(url);
   return response.data.categories; // e.g. [ "Balance Sheet Basics", "Balance Sheet Calculation", ... ]
 }
@@ -19,7 +19,7 @@ async function fetchCategories() {
 // 2) GET raw quiz data for a particular category (using fetch)
 async function fetchQuizDataForCategory(category) {
   const encoded = encodeURIComponent(category);
-  const url = `https://ugabackend.onrender.com/quiz/${encoded}`;
+  const url = `https://ugabackend.onrender.com/quiz_truist/${encoded}`;
 
   const response = await fetch(url);
   const data = await response.json();
