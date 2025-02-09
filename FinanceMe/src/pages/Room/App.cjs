@@ -52,12 +52,6 @@ app.get('/api/quizdata', async (req, res) => {
     // 4a) Get all categories
     const categories = await fetchCategories();
 
-    // We'll store the final data in an object keyed by category
-    // e.g. {
-    //   "Balance Sheet Basics": [ { question, options, correctAnswer }, ... ],
-    //   "Balance Sheet Calculation": [...],
-    //   ...
-    // }
     const allQuizzes = {};
 
     // 4b) Loop through each category, fetch + parse its quiz
