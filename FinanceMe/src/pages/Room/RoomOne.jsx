@@ -1,3 +1,7 @@
+//use app.cjs
+
+
+
 import React, { useState, useEffect } from 'react';
 import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; 
@@ -52,6 +56,34 @@ function RoomOne() {
     setStartTime(Date.now());
   }, []);
 
+  function parseQuizItems(rawQuizArray) {
+    return rawQuizArray
+      // Only keep items that have a question object with at least one valid question part.
+      .filter(item => {
+        if (!item.question) {
+          console.error('Missing question object for item:', item);
+          return false;
+        }
+        const q = item.question;
+        // If both parts are missing (falsy), filter the item out.
+        return Boolean(q.question || q.Question);
+      })
+      // Transform each valid item into the desired format.
+      .map(item => {
+        const q = item.question;
+        return {
+          // Join only the parts that exist (filter out any falsy values)
+          question: [q.question, q.Question].filter(Boolean).join(''),
+          // Only include options that exist
+          options: [q.option1, q.option2, q.option3, q.option4].filter(Boolean),
+          correctAnswer: q.answer,
+        };
+      });
+  }
+  
+  
+
+
   // Fetch quiz data on mount
   useEffect(() => {
     fetch('http://localhost:3001/api/quizdata') // or your actual endpoint
@@ -61,7 +93,8 @@ function RoomOne() {
           // Flatten all categories into a single array
           const allQuestions = [];
           for (let cat in data.quizzes) {
-            allQuestions.push(...data.quizzes[cat]);
+            const parsed = parseQuizItems(data.quizzes[cat]);
+            allQuestions.push(...parsed);
           }
           setQuestionPool(allQuestions);
           console.log('Fetched question pool:', allQuestions);

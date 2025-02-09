@@ -1,3 +1,6 @@
+// use AppRoom3.cjs
+
+
 import React, { useState, useEffect } from 'react';
 import './RoomThree.css';
 import QuestionModal from '../../modals/QuestionModal.jsx'; 
@@ -37,7 +40,7 @@ function RoomThree() {
 
   // Fetch questions once
   useEffect(() => {
-    fetch('http://localhost:3001/api/quizdata/room3')
+    fetch('http://localhost:3002/api/quizdata/room3')
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
