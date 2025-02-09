@@ -1,10 +1,11 @@
 // LandingPage.jsx
 import React, { useState } from "react";
 import axios from "axios";
-import Header from "./LandingHeader";
+import LandingHeader from "./LandingHeader";
 import Button from "../../components/button";
 import Leaderboard from "./Leaderboard";
 import { useNavigate } from 'react-router-dom';
+import FileUpload from '../../components/FileUpload.jsx';
 import './LandingPage.css';
 
 function LandingPage() {
@@ -48,11 +49,7 @@ function LandingPage() {
 
   return (
     <main className="landing-page">
-      <Header />
-
-      {/* File input for uploading PDF */}
-      <input type="file" accept="application/pdf" onChange={handleFileChange} />
-      <Button onClick={handleUpload}>Upload & Parse PDF</Button>
+      <LandingHeader />
 
       <Button 
         className="landing-page__play-game-button"

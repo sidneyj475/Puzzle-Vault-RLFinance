@@ -6,14 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Logo from '../../components/Logo.jsx';
 import './loginPage.css'; // <-- Import the CSS file
+import Loading from '../../components/Loading.jsx';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hadAttempt, setHadAttempt] = useState(false);
 
   const {register, handleSubmit, formState:{ errors }} = useForm({defaultValues: {username: '', password: ''}});
 
   const Submit = async (formData, e) => {
-    console.log(formData);
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await fetch("https://ugabackend.onrender.com/login", {  // FastAPI endpoint
@@ -27,29 +30,30 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Logged in successfully!");
-        console.log("Login Success:", data);
-
+        setIsLoading(false); 
         // Store JWT token in localStorage
         localStorage.setItem("token", data.token);
 
         // Redirect to a dashboard or home page
         navigate("/landingpage");
       } else {
-        alert(`Login failed: ${data.error}`);
+        setIsLoading(false);
+        setHadAttempt(true);
       }
     } catch (error) {
-      console.error("Error logging in:", error);
-      alert("An error occurred. Please try again.");
+      setIsLoading(false);
+      setHadAttempt(true); 
     }
   };
 
   return (
 
     <main className="login-page">
+      {isLoading && <Loading/>}
       <div className="logo-container">
       <Logo />
       </div>
+      {hadAttempt && <p>Incorrect Password or Username</p>}
       <form onSubmit={handleSubmit(Submit)}>
           <p className="login-page__error-message">{errors.username?.message}</p>
           <input placeholder="Username" {...register("username", {required: "Username is required", maxLength: {value: 20, message: "Username must be under 20 characters"}})}/>
