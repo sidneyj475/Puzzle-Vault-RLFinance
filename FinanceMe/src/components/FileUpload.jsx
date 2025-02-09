@@ -15,7 +15,7 @@ function FileUpload() {
 
       // POST the file to your backend
       const response = await axios.post(
-        'http://localhost:8000/process_pdf', 
+        'https://5c99-198-137-18-219.ngrok-free.app/upload_pdf', 
         formData, 
         { 
           headers: { 'Content-Type': 'multipart/form-data' }
