@@ -5,7 +5,7 @@ import LandingHeader from "./LandingHeader";
 import Button from "../../components/button";
 import Leaderboard from "./Leaderboard";
 import { useNavigate } from "react-router-dom";
-import './LandingPage.css';
+import "./LandingPage.css";
 
 function LandingPage() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -29,9 +29,7 @@ function LandingPage() {
       await axios.post(
         'https://5c99-198-137-18-219.ngrok-free.app/upload_pdf', 
         formData, 
-        { 
-          headers: { 'Content-Type': 'multipart/form-data' }
-        }
+        { headers: { 'Content-Type': 'multipart/form-data' }}
       );
 
       alert('File uploaded and parsed successfully!');
@@ -44,16 +42,15 @@ function LandingPage() {
   const handleQuizzify = async () => {
     setIsProcessing(true);
     try {
-      // POST request to your process_pdf endpoint
-      const response = await axios.post("https://5c99-198-137-18-219.ngrok-free.app/process_pdf");
-
+      const response = await axios.post(
+        'https://5c99-198-137-18-219.ngrok-free.app/process_pdf'
+      );
+      
       if (response.data.error) {
-        alert("Failed to generate and store quiz: " + response.data.error);
-        setIsProcessing(false);
+        alert(`Failed to generate and store quiz: ${response.data.error}`);
         return;
       }
-
-      alert(`Quiz successfully processed and stored! ${response.data.quiz_count} questions added.`);
+      alert(`Quiz successfully processed! ${response.data.quiz_count} questions added.`);
     } catch (error) {
       console.error("Error processing quiz:", error);
       alert("Something went wrong while processing the quiz.");
@@ -68,23 +65,23 @@ function LandingPage() {
 
   return (
     <main className="landing-page">
-      <LandingHeader />
+      {/*
+        Pass isProcessing and handleQuizzify to LandingHeader
+        so the button can be placed in the top-right area.
+      */}
+      <LandingHeader
+        isProcessing={isProcessing}
+        onQuizzify={handleQuizzify}
+      />
 
-      {/* File upload section */}
 
-      {/* Quizzify button */}
-      <Button onClick={handleQuizzify} disabled={isProcessing}>
-        {isProcessing ? "Processing..." : "Quizzify"}
-      </Button>
-
-      {/* Play Game button */}
       <Button 
         className="landing-page__play-game-button"
         onClick={handlePlayGame}
       >
         Play Game
       </Button>
-
+      
       <Leaderboard />
     </main>
   );
