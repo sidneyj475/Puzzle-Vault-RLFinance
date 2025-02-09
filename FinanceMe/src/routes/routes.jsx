@@ -12,7 +12,7 @@ import RoomThree from '../pages/Room/RoomThree.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/' , 
     element: <LoginPage />,
   },
   {

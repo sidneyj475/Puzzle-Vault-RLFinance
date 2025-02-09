@@ -52,7 +52,7 @@ export default function SignUpPage (){
         <Button type="submit" className="primary" margin={"30px 0 0 0"}>
           Sign Up
         </Button>
-        <p className="signup-page__footer">Have an account already? <span><Link to="/login">Sign In</Link></span></p>
+        <p className="signup-page__footer">Have an account already? <span><Link to="/">Sign In</Link></span></p>
       </form>
     </main>
   );
