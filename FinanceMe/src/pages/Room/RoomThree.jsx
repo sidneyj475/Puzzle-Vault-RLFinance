@@ -6,6 +6,7 @@ import './RoomThree.css';
 import QuestionModal from '../../modals/QuestionModal.jsx'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
 import Modal from '../../modals/Modal.jsx'; // the generic modal you've shown above
+import QuitGame from '../../components/QuitGame.jsx';
 
 function RoomThree() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -120,6 +121,9 @@ function RoomThree() {
 
   return (
     <main className="room-three">
+
+      <QuitGame />
+
       {/* Coffee Machine */}
       <ObjectBorder
         onClick={() => handleOpenModal('coffeeMachine')}

@@ -7,6 +7,8 @@ import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
 import Modal from '../../modals/Modal.jsx'; // Import your generic Modal
+import QuitGame from '../../components/QuitGame.jsx';
+import TimeKeep from '../../components/TimeKeep.jsx';
 
 function RoomOne() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +16,20 @@ function RoomOne() {
 
   // Track start time
   const [startTime, setStartTime] = useState(null);
+  const [addedTime, setAddedTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(()=> {
+    const interval = setInterval(() => {
+      setCurrentTime((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [])
+
+  const addThirty =() => {
+    setAddedTime((prev) => prev + 30);
+    setCurrentTime((prev) => prev + 30);
+  }
 
   // Manage “congratulations” modal
   const [isCompletedModalOpen, setIsCompletedModalOpen] = useState(false);
@@ -148,7 +164,7 @@ function RoomOne() {
         const allAnswered = Object.values(updated).every(Boolean);
         if (allAnswered) {
           const endTime = Date.now();
-          const totalTimeSeconds = (endTime - startTime) / 1000;
+          const totalTimeSeconds = (endTime - startTime) / 1000 + addedTime;
           console.log(`User took ${totalTimeSeconds} seconds to finish Room One.`);
           setIsCompletedModalOpen(true);
         }
@@ -164,6 +180,7 @@ function RoomOne() {
     } else {
       console.log('Wrong answer!');
       // Keep the modal open and show error
+      addThirty();
       setErrorMessage('That is incorrect. Please try again!');
     }
   };
@@ -178,6 +195,9 @@ function RoomOne() {
 
   return (
     <main className="room-one">
+
+      <QuitGame />
+      <TimeKeep totalSeconds={currentTime} />
 
       {/* Lamp */}
       <ObjectBorder

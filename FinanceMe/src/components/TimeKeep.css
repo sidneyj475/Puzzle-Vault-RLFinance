@@ -1,0 +1,25 @@
+.time-keep {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 30px;
+  margin: 10px 10px 0px 0px;
+}
+
+.time-keep p {
+  padding-left: 10px;
+  font-weight: 400;
+  letter-spacing: 5px;
+}
+
+.quit-game svg {
+  fill: "white";
+  transition: transform .2s ease;
+}
+
+.quit-game:hover svg {
+  transform: scale(1.3);
+}
