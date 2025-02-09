@@ -13,7 +13,7 @@ Puzzle Vault is an online escape room time trial where players must search for o
 
 ## How we built Puzzle Vault
 
-We built Puzzle Vault as a web application using React.js and Vite for the frontend UI, HTML, and CSS for styling. For the backend, we used MongoDB Atlas as the database to store user data and leaderboard information. We also used The OpenAI API to generate the questions from a document.
+We built Puzzle Vault as a web application using React.js and Vite for the frontend UI, HTML, and CSS for styling. For the backend, we used  Python and MongoDB Atlas as the database to store user data and leaderboard information. We also used The OpenAI API to generate the questions from a document.
 
 ## Challenges we faced building Puzzle Vault
 
@@ -21,7 +21,7 @@ One challenge was designing the virtual escape room environment and implementing
 
 ## Accomplishments that we're proud of
 
-We're proud of our use of MongoDB Atlas in Puzzle Vault. We're also proud of
+We're proud of our use of MongoDB Atlas in Puzzle Vault. 
 
 ## What we learned building Puzzle Vault
 
