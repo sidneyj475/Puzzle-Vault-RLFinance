@@ -22,8 +22,8 @@ const router = createBrowserRouter([
   { path: '/landingPage', element: <LandingPage /> },
   { path: '/roomSelect', element: <RoomSelectPage />},
   { path: '/room/:roomGenre/:roomNumber', element: <Room />},
-  { path: '/path-to-room3', element: <RoomThree />},
-  { path: '/path-to-room1', element: <RoomOne />},
+  { path: '/path-to-room3', element: <RoomOne />},
+  { path: '/path-to-room1', element: <RoomThree />},
   {
     path: '/',
     element: <ProtectedRoute />,
