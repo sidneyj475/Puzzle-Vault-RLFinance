@@ -1,16 +1,12 @@
 import React from 'react'
+import './timekeep.css'
 
-function TimeKeep() {
+function TimeKeep({totalSeconds}) {
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('tick');
-    })
-  })
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
-  return (
-    <div>{}</div>
-  )
+  return <p className="time-keep">{minutes} min {seconds} sec</p>;
 }
 
 export default TimeKeep
