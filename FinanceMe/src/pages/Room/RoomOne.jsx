@@ -166,6 +166,26 @@ function RoomOne() {
           const endTime = Date.now();
           const totalTimeSeconds = (endTime - startTime) / 1000 + addedTime;
           console.log(`User took ${totalTimeSeconds} seconds to finish Room One.`);
+
+          // **Send a request to update_time** on your server
+          fetch('https://ugabackend.onrender.com/update_time', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: 'someUsername',   // Replace with actual username
+              game_type: 'time3',         // Indicate which room/time field you're updating
+              time: totalTime
+            })
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Time update response:', data);
+            })
+            .catch(err => {
+              console.error('Error updating time:', err);
+            });
+
+          // Show final "congratulations" modal
           setIsCompletedModalOpen(true);
         }
 
