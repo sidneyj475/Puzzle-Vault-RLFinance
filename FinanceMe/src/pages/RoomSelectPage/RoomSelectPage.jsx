@@ -7,16 +7,10 @@ import Header from '../Room/Header'
 import { useNavigate } from 'react-router-dom';
 // Images
 import roomImage1 from '../../assets/AdobeStock_701512458.jpeg';
-import roomImage2 from '../../assets/AdobeStock_701984883.jpeg';
+import roomImage2 from '../../assets/RoomThree.jpeg';
 import roomImage3 from '../../assets/AdobeStock_845835364.jpeg';
 
-import suiteImage1 from '../../assets/ViewRoom.jpeg';
-import suiteImage2 from '../../assets/AdobeStock_937072431.jpeg';
-import suiteImage3 from '../../assets/AdobeStock_845835364.jpeg';
 
-import deluxeImage1 from '../../assets/AdobeStock_1107548196.jpeg';
-import deluxeImage2 from '../../assets/AdobeStock_879761973.jpeg';
-import deluxeImage3 from '../../assets/AdobeStock_1107548196.jpeg';
 import './RoomSelectPage.css';
 
 function RoomSelectPage() {
