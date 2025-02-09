@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import Logo from '../../components/Logo.jsx';
 import './loginPage.css'; // <-- Import the CSS file
 import Loading from '../../components/Loading.jsx';
+import { AuthContext } from '../../authcontext.jsx';
 
 const Login = () => {
+  const {login} = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hadAttempt, setHadAttempt] = useState(false);
@@ -24,17 +26,15 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Send { "username": "...", "password": "..." }
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         setIsLoading(false); 
-        // Store JWT token in localStorage
-        localStorage.setItem("token", data.token);
-
-        // Redirect to a dashboard or home page
+        login(data.username, data.user_id, data.token, new Date(new Date().getTime() + 1000 * 60 * 60)); 
         navigate("/landingpage");
       } else {
         setIsLoading(false);
