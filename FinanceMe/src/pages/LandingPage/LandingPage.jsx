@@ -24,7 +24,7 @@ function LandingPage() {
       formData.append("file", selectedFile);
 
       // Send file to Flask backend
-      const response = await axios.post("http://localhost:5000/upload_pdf", formData, {
+      const response = await axios.post("https://5c99-198-137-18-219.ngrok-free.app/upload_pdf", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -40,7 +40,7 @@ function LandingPage() {
   const handleQuizzify = async () => {
     setIsProcessing(true);
     try {
-      const response = await axios.post("http://localhost:5000/process_pdf");
+      const response = await axios.post("https://ugabackend.onrender.com/process_pdf");
 
       if (response.data.error) {
         alert("Failed to generate and store quiz: " + response.data.error);
