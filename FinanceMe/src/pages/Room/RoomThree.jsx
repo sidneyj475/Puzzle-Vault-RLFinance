@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import './RoomThree.css';
 import QuestionModal from '../../modals/QuestionModal.jsx'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
+import Modal from '../../modals/Modal.jsx'; // the generic modal you've shown above
 
 function RoomThree() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  
+  // Track the quiz start time
+  const [startTime, setStartTime] = useState(null);
+
+  // Manage “congratulations” modal
+  const [isCompletedModalOpen, setIsCompletedModalOpen] = useState(false);
 
   // QUESTIONS
   const [questionPool, setQuestionPool] = useState([]);
 
   // Track which objects have been answered
-  // e.g., coffeeMachine, coffeeMenu, coffeePot, plant, stool
   const [answeredItems, setAnsweredItems] = useState({
     coffeeMachine: false,
     coffeeMenu: false,
@@ -21,8 +27,13 @@ function RoomThree() {
     stool: false,
   });
 
-  // Store the object key we are currently answering (e.g. "coffeeMachine")
+  // Store the object key we are currently answering
   const [selectedObjectKey, setSelectedObjectKey] = useState(null);
+
+  // Set the start time once the component mounts
+  useEffect(() => {
+    setStartTime(Date.now());
+  }, []);
 
   // Fetch questions once
   useEffect(() => {
@@ -74,12 +85,26 @@ function RoomThree() {
       console.log('Correct answer!');
 
       // Mark object as answered
-      setAnsweredItems((prev) => ({
-        ...prev,
-        [selectedObjectKey]: true,
-      }));
+      setAnsweredItems((prev) => {
+        const updated = {
+          ...prev,
+          [selectedObjectKey]: true,
+        };
+        // Check if all answered
+        const allAnswered = Object.values(updated).every(Boolean);
+        if (allAnswered) {
+          // Calculate how long it took
+          const endTime = Date.now();
+          const totalTime = (endTime - startTime) / 1000; // in seconds
+          console.log(`User took ${totalTime} seconds to finish Room 3.`);
 
-      // Close modal
+          // Show final "congratulations" modal
+          setIsCompletedModalOpen(true);
+        }
+        return updated;
+      });
+
+      // Close the question modal
       setIsModalOpen(false);
       setCurrentQuestion(null);
       setSelectedObjectKey(null);
@@ -150,13 +175,25 @@ function RoomThree() {
       {/* The Question Modal */}
       <QuestionModal
         show={isModalOpen}
-        // No manual cancellation
-        onCancel={null}
+        onCancel={null} // No manual cancellation
         question={currentQuestion ? currentQuestion.question : ''}
         options={currentQuestion ? currentQuestion.options : []}
         errorMessage={errorMessage}
         onSubmit={handleQuestionSubmit}
       />
+
+      {/* Completion Modal */}
+      <Modal
+        show={isCompletedModalOpen}
+        onCancel={() => {
+          // If you don't want them to close it, you can either remove this or do something else
+          setIsCompletedModalOpen(false);
+        }}
+        header="Congratulations!"
+        footer={<button onClick={() => setIsCompletedModalOpen(false)}>Close</button>}
+      >
+        <p>You passed!</p>
+      </Modal>
     </main>
   );
 }

@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './RoomOne.css';
 import QuestionModal from '../../modals/QuestionModal'; 
 import ObjectBorder from '../../components/ObjectBorder.jsx';
+import Modal from '../../modals/Modal.jsx'; // Import your generic Modal
 
 function RoomOne() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedObject, setSelectedObject] = useState(null);
+
+  // Track start time
+  const [startTime, setStartTime] = useState(null);
+
+  // Manage “congratulations” modal
+  const [isCompletedModalOpen, setIsCompletedModalOpen] = useState(false);
 
   // Track whether each item has been answered
   const [answeredItems, setAnsweredItems] = useState({
@@ -28,7 +35,8 @@ function RoomOne() {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Optional: A simple timer example
+  // OPTIONAL: Simple timer example (already in your code).
+  // This just prints out every second, but does not affect the final logic.
   useEffect(() => {
     let secondsElapsed = 0;
     const interval = setInterval(() => {
@@ -37,6 +45,11 @@ function RoomOne() {
     }, 1000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Track the actual start time for completion logging
+  useEffect(() => {
+    setStartTime(Date.now());
   }, []);
 
   // Fetch quiz data on mount
@@ -61,23 +74,23 @@ function RoomOne() {
 
   // When user clicks an object
   const handleOpenModal = (objectKey) => {
-    // If that object was not answered already
-    if (!answeredItems[objectKey]) {
-      // If we've used up all questions
-      if (questionPool.length === 0) {
-        alert('No more questions available!');
-        return;
-      }
+    // If that object was already answered, do nothing
+    if (answeredItems[objectKey]) return;
 
-      // Pick a random question from questionPool
-      const randomIndex = Math.floor(Math.random() * questionPool.length);
-      const randomQuestion = questionPool[randomIndex];
-
-      setCurrentQuestion(randomQuestion);
-      setSelectedObject(objectKey);
-      setErrorMessage('');
-      setIsModalOpen(true);
+    // If we've used up all questions
+    if (questionPool.length === 0) {
+      alert('No more questions available!');
+      return;
     }
+
+    // Pick a random question from questionPool
+    const randomIndex = Math.floor(Math.random() * questionPool.length);
+    const randomQuestion = questionPool[randomIndex];
+
+    setCurrentQuestion(randomQuestion);
+    setSelectedObject(objectKey);
+    setErrorMessage('');
+    setIsModalOpen(true);
   };
 
   // Handle user's answer
@@ -95,12 +108,22 @@ function RoomOne() {
       );
 
       // Mark only that object as answered
-      setAnsweredItems((prev) => ({
-        ...prev,
-        [selectedObject]: true,
-      }));
+      setAnsweredItems((prev) => {
+        const updated = { ...prev, [selectedObject]: true };
 
-      // Close modal
+        // Check if all items are now answered
+        const allAnswered = Object.values(updated).every(Boolean);
+        if (allAnswered) {
+          const endTime = Date.now();
+          const totalTimeSeconds = (endTime - startTime) / 1000;
+          console.log(`User took ${totalTimeSeconds} seconds to finish Room One.`);
+          setIsCompletedModalOpen(true);
+        }
+
+        return updated;
+      });
+
+      // Close the question modal
       setIsModalOpen(false);
       setSelectedObject(null);
       setErrorMessage('');
@@ -233,16 +256,26 @@ function RoomOne() {
         className="room-one__trashcan"
       />
 
-      {/* The Question Modal */}
+      {/* Question Modal */}
       <QuestionModal
         show={isModalOpen}
-        onCancel={null}
-        // Use the question & options from currentQuestion
+        onCancel={null} // Disables manual cancel
         question={currentQuestion ? currentQuestion.question : ''}
         options={currentQuestion ? currentQuestion.options : []}
         errorMessage={errorMessage}
         onSubmit={handleQuestionSubmit}
       />
+
+      {/* Congratulations Modal */}
+      <Modal
+        show={isCompletedModalOpen}
+        onCancel={() => setIsCompletedModalOpen(false)}  // or omit if you don't want manual close
+        header="Congratulations!"
+        footer={<button onClick={() => setIsCompletedModalOpen(false)}>Close</button>}
+      >
+        <p>You passed!</p>
+      </Modal>
+
     </main>
   );
 }
