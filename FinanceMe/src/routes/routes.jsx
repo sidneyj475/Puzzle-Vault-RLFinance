@@ -11,7 +11,7 @@ import RoomOne from '../pages/Room/RoomOne.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/login',
     element: <LoginPage />,
   },
   {
