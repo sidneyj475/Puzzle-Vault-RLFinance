@@ -1,4 +1,6 @@
-A project gamifying financial analysis for employees of a public-facing company
+A project gamifying financial analysis for employees of a public-facing company for Truist Challenge 1 at UGAHacks X
+DevPost: https://devpost.com/software/truist-cape
+Video Demo: https://www.youtube.com/watch?v=slgCbs9MWLY
 
 ## Team Members
 Carson Bates, Sidney Johnson, Zachariah Risheq, Han Lee
